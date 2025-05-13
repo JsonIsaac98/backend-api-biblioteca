@@ -1,36 +1,38 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Usuario } from "./usuario.entity";
-import { Libro } from "./libro.entity";
-
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Usuario } from './usuario.entity';
+import { Libro } from './libro.entity';
 
 @Entity('prestamos')
 export class Prestamo {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({name: 'usuario_id'})
-    usuarioId: number;
+  @Column({ name: 'usuario_id' })
+  usuarioId: number;
 
-    @Column({name: 'libro_id'})
-    libroId: number;
+  @Column({ name: 'libro_id' })
+  libroId: number;
 
-    @CreateDateColumn({ name: 'fecha_prestamo' })
-    fechaPrestamo: Date;
+  @CreateDateColumn({ name: 'fecha_prestamo' })
+  fechaPrestamo: Date;
 
-    @Column('date', { name: 'fecha_devolucion' })
-    fechaDevolucion: Date;
+  @Column('date', { name: 'fecha_devolucion' })
+  fechaDevolucion: Date;
 
-    @Column(({ type: 'enum', enum: ['prestado', 'devuelto', 'vencido'], default: 'prestado' }))
-    estado: string; 
+  @Column('timestamp', { nullable: true, name: 'fecha_devolucion_real' })
+  fechaDevolucionReal: Date;
 
-    @Column('decimal', { precison: 10, scale: 2, default: 0 })
-    multa: number;
+  @Column({ type: 'enum', enum: ['prestado', 'devuelto', 'vencido'], default: 'prestado' })
+  estado: string;
 
-    @ManyToMany(() => Usuario, usuario => usuario.prestamos)
-    @JoinColumn({ name: 'usuario_id' })
-    usuario: Usuario;
+  @Column('decimal', { precision: 10, scale: 2, default: 0 })
+  multa: number;
 
-    @ManyToMany(() => Libro, libro => libro.prestamos)
-    @JoinColumn({ name: 'libro_id' })
-    libro: Libro;
+  @ManyToOne(() => Usuario, usuario => usuario.prestamos)
+  @JoinColumn({ name: 'usuario_id' })
+  usuario: Usuario;
+
+  @ManyToOne(() => Libro, libro => libro.prestamos)
+  @JoinColumn({ name: 'libro_id' })
+  libro: Libro;
 }

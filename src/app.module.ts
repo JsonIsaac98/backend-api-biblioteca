@@ -1,6 +1,7 @@
 // backend/src/app.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { LibrosModule } from './libros/libros.module';
 
 
 @Module({
@@ -16,6 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: false,
       logging: true,
     }),
+    LibrosModule,
   ],
 })
 export class AppModule {}
