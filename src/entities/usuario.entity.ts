@@ -1,9 +1,8 @@
 import { Exclude } from "class-transformer";
-import { cp } from "fs";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Prestamo } from "./prestamo.entity";
 
-@Entity('usuario')
+@Entity('usuarios')
 export class Usuario {
     @PrimaryGeneratedColumn()
     id: number;
